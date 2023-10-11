@@ -1,0 +1,27 @@
+const buttons = document.querySelectorAll('.btn');
+const screenResult = () => {
+    return document.querySelector('.screen-result').textContent;
+};
+
+buttons.forEach((btn) => {
+    let btnValue = btn.textContent;
+    btn.addEventListener('click', () => {
+        if(isNaN(btnValue)) { 
+            if(screenResult().textContent == 0) { return; }
+            if(isNaN(screenResult().textContent[screenResult().textContent.length-1])) { 
+                let operator = screenResult().textContent[screenResult().textContent.length-1];
+                let newDisplayScreen = screenResult().textContent.replace(operator, btnValue);
+                screenResult().textContent = newDisplayScreen;
+                return;
+            }
+            screenResult().textContent += ` ${btnValue} `; 
+            return 
+        }
+        if(screenResult().textContent == 0) { screenResult().textContent = btnValue; return;}
+        screenResult().textContent += btnValue;
+
+    })
+})
+
+
+
