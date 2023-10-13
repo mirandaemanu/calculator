@@ -48,10 +48,7 @@ buttons.forEach((btn) => {
         if(isNaN(btnValue)) {
             if(screenResultValue == "-") { return; }
             let operation = screenResultValue.split(" ");
-            console.log(operation)
-            console.log("passou 1")
             if(btnValue == ".") {
-                console.log("entrou")
                 if(operation.length < 2 && operation[0].includes(".")) { return ;}
                 if(operation.length >2 && operation[2].includes(".")) { return; }
                 screenResult.textContent += ".";
@@ -60,34 +57,27 @@ buttons.forEach((btn) => {
             
 
             if(btnValue == "-") {
-                console.log("entrou no -")
                 if(screenResultValue == "-" || operation.length > 2 && operation[2].includes("-")) { return; }
                 if(operation.length < 2 && screenResultValue == 0) { 
                     screenResult.textContent = "-"; 
                     return;
                 }
-
-                console.log("entrada da validação")
                 
                 if(operation.length >=2 && operation[2].length == 0) {
-                    console.log(`operation[2] length: ${operation[2].length}`)
-                    console.log("entrou nesse")
                     screenResult.textContent += "-";
                     return;
                 }
             }
 
-
             if(operation.length > 2 && btnValue != ".") {
                 let num1 = operation[0];
                 let num2 = operation[2];
                 let operator = operation[1];
-                console.log(num2.slice(-1))
                 screenResult.textContent = doTheMath(num1, num2, operator);
             }
 
             if(screenResult.textContent == 0) { return; }
-            console.log("passou 2")
+            
             let operator = screenResultValue[screenResultValue.length-2];
             if(isNaN(operator) && operator != "." && operation.length >= 2) { 
                 let newDisplayScreen = screenResultValue.replace(operator, btnValue);
@@ -95,13 +85,10 @@ buttons.forEach((btn) => {
                 return;
             }
 
-            console.log("passou 3")
             screenResult.textContent += ` ${btnValue} `; 
-            return 
+            return; 
         }
 
-
-        
         document.querySelector('.screen-result').textContent += btnValue;
 
     })
@@ -130,9 +117,13 @@ const doTheMath = (num1, num2, operator) => {
         case "x":
             return num1 * num2;
         case "/":
+            if(num1 == 0 || num2 == 0) {
+                return 0;
+            }
             return num1 / num2;
     }
 }
+
 
 document.querySelector('.del-btn').addEventListener('click', () => {
     document.querySelector('.screen-result').textContent = "0";
